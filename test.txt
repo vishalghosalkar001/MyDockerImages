@@ -1,0 +1,46 @@
+pipeline
+{
+	agent 
+    {
+		docker
+        {
+			image 'mysql'
+        }
+    }
+
+    stages 
+	{
+        stage('run mysql inside docker container') 
+		{
+            steps 
+			{
+                sudo –i
+				apt install docker.io
+				git clone https://github.com/SimplilearnDevOpsOfficial/DockerWithMySQL.git
+				ls
+				cd DockerWithMySQL
+				sudo chmod 777 *
+				chmod u+x runserver_first
+				docker volume create --name monitoring_data
+				docker volume ls
+				sudo chmod u+x runserver_first
+				./runserver_first
+				docker images
+				docker logs mysql
+            }
+        }
+        stage('Test') 
+		{
+            steps 
+			{
+                echo 'Testing..'
+            }
+        }
+        stage('Deploy') 
+		{
+            steps 
+			{
+                echo 'Deploying....'
+            }
+        }
+    }
